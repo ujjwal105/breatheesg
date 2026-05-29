@@ -36,7 +36,7 @@ CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.environ.get(
         "CORS_ALLOWED_ORIGINS",
-        "http://localhost:5173,https://breathe-esg-web.onrender.com",
+        "http://localhost:5173,https://breathe-esg-web-ug5v.onrender.com",
     ).split(",")
     if origin.strip()
 ]

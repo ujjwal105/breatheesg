@@ -13,9 +13,9 @@ services:
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: breathe-esg-api.onrender.com
+        value: breatheesg-xc1w.onrender.com
       - key: CORS_ALLOWED_ORIGINS
-        value: http://localhost:5173,https://breathe-esg-web.onrender.com
+        value: http://localhost:5173,https://breathe-esg-web-ug5v.onrender.com
   - type: static
     name: breathe-esg-web
     rootDir: frontend
