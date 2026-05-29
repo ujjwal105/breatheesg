@@ -87,14 +87,26 @@ def records(request):
     source_type = request.GET.get("source_type")
     review_status = request.GET.get("review_status")
     scope_category = request.GET.get("scope_category")
+    validation_status = request.GET.get("validation_status")
+    batch_id = request.GET.get("batch_id")
+    has_flags = request.GET.get("has_flags")
     if source_type:
         queryset = queryset.filter(source_type=source_type)
     if review_status:
         queryset = queryset.filter(review_status=review_status)
     if scope_category:
         queryset = queryset.filter(scope_category=scope_category)
-    items = [record_to_dict(record) for record in queryset[:500]]
-    return json_response({"results": items})
+    if validation_status:
+        queryset = queryset.filter(validation_status=validation_status)
+    if batch_id:
+        queryset = queryset.filter(batch_id=batch_id)
+    if has_flags == "true":
+        queryset = queryset.exclude(suspicion_flags=[])
+    total = queryset.count()
+    limit = min(int(request.GET.get("limit", 200)), 500)
+    offset = int(request.GET.get("offset", 0))
+    items = [record_to_dict(record) for record in queryset[offset: offset + limit]]
+    return json_response({"results": items, "total": total, "limit": limit, "offset": offset})
 
 
 @require_http_methods(["GET"])

@@ -279,15 +279,6 @@ def normalize_travel_row(batch: IngestionBatch, row: dict[str, Any], row_number:
     if travel_type == "hotel" and start_date and end_date and end_date < start_date:
         warnings.append("Hotel checkout precedes check-in.")
 
-    if not travel_type:
-        warnings.append("Travel row is missing a category; defaulted to generic trip.")
-    if amount is None:
-        warnings.append("Travel booking has no amount.")
-    if travel_type == "air" and not (origin and destination):
-        warnings.append("Air travel row missing airport codes.")
-    if travel_type == "hotel" and start_date and end_date and end_date < start_date:
-        warnings.append("Hotel checkout precedes check-in.")
-
     normalized = {
         "source_subtype": travel_type or "trip",
         "source_system": batch.source_system,
